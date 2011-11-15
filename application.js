@@ -28,7 +28,7 @@ function renderOrderList(url, target) {
 	$.getJSON(url,
 	  function(data) {
 		$.each(data.submissions, function(i,item){
-			$('<li><a href="/api/1/' + item.uuid + '"> '+item.created_at+'</a></li>').appendTo(target);
+			$('<li><a href="http://psd-dev.internal.sanger.ac.uk:6800/api/1/' + item.uuid + '"> '+item.created_at+'</a></li>').appendTo(target);
 		});
 		if(data.actions.next != data.actions.last) {
 			next_url = data.actions.next;
@@ -56,16 +56,16 @@ function getURLParameter(name) {
 
 function init() {
 	$( '#statusPage' ).live( 'pageinit',function(event){
-	  fetchStudyDetails("/api/1/" + current_uuid, "studyTemplate", "#study");
+	  fetchStudyDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, "studyTemplate", "#study");
 
 	});
 
 	$( '#indexPage').live( 'pageinit',function(event){
-		renderStudyList("/api/1/studies", "studyListTemplate", "#list");
+		renderStudyList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/studies", "studyListTemplate", "#list");
 	});
 
 	$( '#ordersPage').live( 'pageinit',function(event){
-		renderOrderList("/api/1/" + current_uuid + "/submissions", "#orderList");
+		renderOrderList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/submissions", "#orderList");
 	});
 
 };
