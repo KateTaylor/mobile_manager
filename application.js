@@ -55,17 +55,9 @@ function getURLParameter(name) {
 }
 
 function init() {
-	try {
-		$( '#statusPage' ).live( 'pageinit',function(event){
-	  	fetchStudyDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, "studyTemplate", "#study");
-		});
-	}	
-	catch(err) {
-  	txt="Sorry, there was an error on this page.\n\n";
-  	txt+="Error description: " + err.description + "\n\n";
-  	txt+="Click OK to continue.\n\n";
-  	alert(txt);
-	}
+	$( '#statusPage' ).live( 'pageinit',function(event){
+  	fetchStudyDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, "studyTemplate", "#study");
+	});
 
 	$( '#indexPage').live( 'pageinit',function(event){
 		renderStudyList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/studies", "studyListTemplate", "#list");
