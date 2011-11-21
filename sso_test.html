@@ -1,10 +1,38 @@
 <html>
 <head>
- <script type="text/javascript" src="http://js.sanger.ac.uk/toggle.js" ></script>
+<!-- included below for now <script type="text/javascript" src="http://js.sanger.ac.uk/toggle.js" ></script> -->
+<script type="text/javascript">
+//Author:jc3 2008-03-11 toggle login box
+Event.observe(window,'load',function(){
+  if($('loginLink')){
+    Event.observe('loginLink','click',function(event){
+      if($('login_box')){
+        if($('login_box').style.display=='none'){
+          $('login_box').show();
+          Form.focusFirstElement($('login_box').getElementsByTagName('form')[0]);
+        }
+        else{
+          $('login_box').hide();
+        }
+        Event.stop(event)
+      }
+    });
+  }
+});
+</script>
  </head>
 <body>
- <a href="https://enigma.sanger.ac.uk/sso/login" id="loginLink"><img src="/icons/navigation/key.gif" alt="Login to WTSI resources" title="Login to WTSI resources" /></a>
-<!--<body onload="getCookie()">-->
+<div id="login_box" style="display:true">
+              <form autocomplete="off" name="ssologin" action="https://enigma.sanger.ac.uk/LOGIN" method="post" >
+                <input type="hidden" name="destination" value="file:///users/kt6/Projects/mobile_manager/sso_test.html" />
+                <label for="credential_0">Username:</label> 
+                <input type="text" name="credential_0" maxlength="128" class="field"/>
+                <label for="credential_1">Password:</label> 
+                <input type="password" name="credential_1" maxlength="20" class="field"/>
+                <input type="submit" value="Login" />
+              </form>
+            </div>
+<!--this goes in index.html-->
 <!--begin configured ssosignon for kt6 
 <div class="portlet">
   <div class="portlethead">Logged in as kt6</div>
