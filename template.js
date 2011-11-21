@@ -3,4 +3,4 @@ $.template( "studyTemplate",
 );
 
 $.template( "studyListTemplate",
-'<li><a href="/apps/pm.old/status.html" data-transition="slide">${name}</a></li>');
+'<li><a href="status.html" data-transition="slide">${name}</a></li>');
