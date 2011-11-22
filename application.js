@@ -90,7 +90,7 @@ function init() {
 	});
 
 	$( '#samplesPage').live( 'pageinit',function(event){
-		renderSamplesList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/samples", "#orderList");
+		renderSampleList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/samples", "#sampleList");
 	});
 
 };
