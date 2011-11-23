@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc1/jquery.mobile-1.0rc1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.0rc1/jquery.mobile-1.0rc1.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+	<script src="template.js"></script>
+  <script>
+function fetchSampleDetails(url, template, target) {
+    $.getJSON(url, 
+      function(data) {
+         $.tmpl(template, data.sample).appendTo(target);
+        });
+}
+
+fetchSampleDetails('http://psd-dev.internal.sanger.ac.uk:6800/api/1/32a8096e-b9c2-11df-9e66-00144f01a414', 
+	"sampleTemplate", 
+	"#sample");
+
+
+</script>
+</head>
+<body>
+	<div data-add-back-btn="true" data-role="page" data-theme="b" id="sample">
+     <div  data-role="header" data-theme="b">
+				<h1>DNA Pipelines - Project management - Sample details test page</h1>
+      </div>
+      <div data-role="content" id = "sampleDetails">
+			</div>
+	</div>
+</body>
+</html>
