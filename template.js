@@ -12,12 +12,24 @@ $.template( "orderTemplate",
 $.template( "orderListTemplate",
 '<li><a href="orders.html" data-transition="slide">${name}</a></li>');
 
+// samples
+
 $.template( "sampleTemplate", 
-'<h2>${sanger.name}</h2> <p> This sample was created at ${created_at}<br> GC_content: ${supplier.measurements.gc_content}</p>'
+'<h2>${sanger.name}</h2> <p> This sample was created at ${created_at}<br> GC_content: ${supplier.measurements.gc_content}.<br><br>There are ${size} samples tubes for this sample.</p>'
 );
 
 $.template( "sampleListTemplate",
 '<li><a href="sample.html" data-transition="slide">${sanger.name}</a></li>');
+
+// assets
+
+$.template( "assetTemplate", 
+'<h2>${barcode.ean13} ${barcode.prefix}.${barcode.number}</h2> <p> This asset was created at ${created_at} for sample ${name} and last updated at ${updated_at}</p>');
+
+$.template( "assetListTemplate", 
+'<li><a href="asset.html" data-transition="slide">${name} ${barcode.ean13}</a></li>');
+
+// reports
 
 $.template( "reportListTemplate",
 '<li><a href="reports.html" data-transition="slide">${name}</a></li>');

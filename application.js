@@ -43,8 +43,7 @@ function renderSampleList(url, template, target) {
 		$.each(data.samples, function(i,item){
 			$.tmpl(template, item)
 			  .appendTo(target)
-			  // this would change the uuid to the sample, but lose the study uuid that takes us in to the data
-				//.bind('click', function() {current_uuid = item.uuid; });
+				.bind('click', function() {current_uuid = item.uuid; });
 		});
 		if(data.actions.next != data.actions.last) {
 			next_url = data.actions.next;
@@ -67,6 +66,40 @@ function fetchSampleDetails(url, template, target) {
 				alert("Something has gone wrong when finding sample details");
 		});
 }
+
+//Assets 
+
+function renderAssetList(url, template, target) {
+	next_url = null;
+	$.getJSON(url,
+	  function(data) {
+		$.each(data.sample_tubes, function(i,item){
+			$.tmpl(template, item)
+			  .appendTo(target)
+				.bind('click', function() {current_uuid = item.uuid; });
+		});
+		if(data.actions.next != data.actions.last) {
+			next_url = data.actions.next;
+		}
+	}).complete(function(data){
+		$(target).listview('refresh');
+		if(next_url) {
+			renderAssetList(next_url, template, target)
+		}
+	}).error(function() {
+			alert("Something has gone wrong when finding available assets");
+	});
+}
+
+function fetchAssetDetails(url, template, target) {
+	$.getJSON(url, 
+	  function(data) {
+		 $.tmpl(template, data.sample_tube).appendTo(target);
+			}).error(function() {
+				alert("Something has gone wrong when finding asset details");
+		});
+}
+
 
 // Orders
 
@@ -142,6 +175,18 @@ function init() {
 		fetchSampleDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid , 
 		"sampleTemplate", 
 		"#sample");
+	});
+
+	$( '#assetsPage').live( 'pageinit',function(event){
+		renderAssetList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/sample_tubes",
+		"assetListTemplate", 
+		"#assetList");
+	});
+
+	$( '#assetPage').live( 'pageinit',function(event){
+		fetchAssetDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid , 
+		"assetTemplate", 
+		"#asset");
 	});
 
 };
