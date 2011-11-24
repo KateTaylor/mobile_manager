@@ -43,7 +43,8 @@ function renderSampleList(url, template, target) {
 		$.each(data.samples, function(i,item){
 			$.tmpl(template, item)
 			  .appendTo(target)
-			  .bind('click', function() {current_uuid = item.uuid; });
+			  // this would change the uuid to the sample, but lose the study uuid that takes us in to the data
+				//.bind('click', function() {current_uuid = item.uuid; });
 		});
 		if(data.actions.next != data.actions.last) {
 			next_url = data.actions.next;
@@ -126,13 +127,13 @@ function init() {
 	});
 
 	$( '#orderPage').live( 'pageinit',function(event){
-		fetchOrderDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid , 
+		fetchOrderDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, 
 		"orderTemplate", 
 		"#order");
 	});
 
 	$( '#samplesPage').live( 'pageinit',function(event){
-		renderSampleList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid,
+		renderSampleList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/samples",
 		"sampleListTemplate", 
 		"#sampleList");
 	});
