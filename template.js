@@ -24,10 +24,18 @@ $.template( "sampleListTemplate",
 // assets
 
 $.template( "assetTemplate", 
-'<h2>${barcode.ean13} ${barcode.prefix}.${barcode.number}</h2> <p> This asset was created at ${created_at} for sample ${name} and last updated at ${updated_at}</p>');
+'<h2>${barcode.ean13} ${barcode.prefix}.${barcode.number}</h2> <p> This asset was created at ${created_at} for sample ${name}<br>Last updated at ${updated_at}</p>');
 
 $.template( "assetListTemplate", 
 '<li><a href="asset.html" data-transition="slide">${name} ${barcode.ean13}</a></li>');
+
+// requests
+
+$.template( "requestTemplate", 
+'<h2>${type}</h2> <p> This request was created at ${created_at}.<br>Last updated at ${updated_at} <br>Current state: ${state} <br>Fragment from ${fragment_size.from} to ${fragment_size.to}</p>');
+
+$.template( "requestListTemplate", 
+'<li><a href="request.html" data-transition="slide">${name} ${type}</a></li>');
 
 // reports
 

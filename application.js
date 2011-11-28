@@ -1,7 +1,7 @@
 // Requires jQuery template
 
 var current_uuid;
-
+var url_root = 'http://psd-dev.internal.sanger.ac.uk:6800/api/1/';
 
 function renderStudyList(url, template, target) {
 	next_url = null;
@@ -101,6 +101,39 @@ function fetchAssetDetails(url, template, target) {
 }
 
 
+//Requests 
+
+function renderRequestList(url, template, target) {
+	next_url = null;
+	$.getJSON(url,
+	  function(data) {
+		$.each(data.requests, function(i,item){
+			$.tmpl(template, item)
+			  .appendTo(target)
+				.bind('click', function() {current_uuid = item.uuid; });
+		});
+		if(data.actions.next != data.actions.last) {
+			next_url = data.actions.next;
+		}
+	}).complete(function(data){
+		$(target).listview('refresh');
+		if(next_url) {
+			renderAssetList(next_url, template, target)
+		}
+	}).error(function() {
+			alert("Something has gone wrong when finding available requests");
+	});
+}
+
+function fetchRequestDetails(url, template, target) {
+	$.getJSON(url, 
+	  function(data) {
+		 $.tmpl(template, data.requests).appendTo(target);
+			}).error(function() {
+				alert("Something has gone wrong when finding request details");
+		});
+}
+
 // Orders
 
 function renderOrderList(url, template, target) {
@@ -142,51 +175,63 @@ function getURLParameter(name) {
 
 function init() {
 	$( '#indexPage').live( 'pageinit',function(event){
-		renderStudyList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/studies", 
+		renderStudyList(url_root + "studies", 
 		"studyListTemplate", 
 		"#list");
 	});
 
 	$( '#statusPage' ).live( 'pageinit',function(event){
-  	fetchStudyDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, 
+  	fetchStudyDetails(url_root + current_uuid, 
 		"studyTemplate", 
 		"#study");
 	});
 
 	$( '#ordersPage').live( 'pageinit',function(event){
-		renderOrderList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/submissions", 
+		renderOrderList(url_root + current_uuid + "/submissions", 
 		"orderListTemplate", 
 		"#orderList");
 	});
 
 	$( '#orderPage').live( 'pageinit',function(event){
-		fetchOrderDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid, 
+		fetchOrderDetails(url_root + current_uuid, 
 		"orderTemplate", 
 		"#order");
 	});
 
 	$( '#samplesPage').live( 'pageinit',function(event){
-		renderSampleList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/samples",
+		renderSampleList(url_root + current_uuid + "/samples",
 		"sampleListTemplate", 
 		"#sampleList");
 	});
 
 	$( '#samplePage').live( 'pageinit',function(event){
-		fetchSampleDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid , 
+		fetchSampleDetails(url_root + current_uuid , 
 		"sampleTemplate", 
 		"#sample");
 	});
 
 	$( '#assetsPage').live( 'pageinit',function(event){
-		renderAssetList("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid + "/sample_tubes",
+		renderAssetList(url_root + current_uuid + "/sample_tubes",
 		"assetListTemplate", 
 		"#assetList");
 	});
 
 	$( '#assetPage').live( 'pageinit',function(event){
-		fetchAssetDetails("http://psd-dev.internal.sanger.ac.uk:6800/api/1/" + current_uuid , 
+		fetchAssetDetails(url_root + current_uuid + "/sample_tube", 
 		"assetTemplate", 
 		"#asset");
+	});
+
+	$( '#requestsPage').live( 'pageinit',function(event){
+		renderRequestList(url_root + current_uuid + "/requests",
+		"requestListTemplate", 
+		"#requestList");
+	});
+
+	$( '#requestPage').live( 'pageinit',function(event){
+		fetchRequestDetails(url_root + current_uuid , 
+		"requestTemplate", 
+		"#request");
 	});
 
 };
