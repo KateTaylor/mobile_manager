@@ -21,7 +21,7 @@ function renderStudyList(url, template, target) {
 			renderStudyList(next_url, template, target)
 		}
 	}).error(function() {
-			alert("Something has gone wrong when finding available studies");
+			alert("Something has gone wrong when finding available studies: have you logged on yet?");
 	});
 }
 
@@ -217,7 +217,7 @@ function init() {
 	});
 
 	$( '#assetPage').live( 'pageinit',function(event){
-		fetchAssetDetails(url_root + current_uuid + "/sample_tube", 
+		fetchAssetDetails(url_root + current_uuid, 
 		"assetTemplate", 
 		"#asset");
 	});
@@ -229,7 +229,7 @@ function init() {
 	});
 
 	$( '#requestPage').live( 'pageinit',function(event){
-		fetchRequestDetails(url_root + current_uuid , 
+		fetchRequestDetails(url_root + current_uuid, 
 		"requestTemplate", 
 		"#request");
 	});
